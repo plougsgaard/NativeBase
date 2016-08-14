@@ -15,41 +15,33 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Zocial from 'react-native-vector-icons/Zocial';
 
-var Icon;
-
-switch(variables.iconFamily) {
-    case 'Ionicons':
-        Icon = Ionicons;
-        break;
-    case 'Entypo':
-        Icon = Entypo;
-        break;
-    case 'FontAwesome':
-        Icon = FontAwesome;
-        break;
-    case 'Foundation':
-        Icon = Foundation;
-        break;
-    case 'MaterialIcons':
-        Icon = MaterialIcons;
-        break;
-    case 'Octicons':
-        Icon = Octicons;
-        break;
-    case 'Zocial':
-        Icon = Zocial;
-        break;
-    default:
-        Icon = Ionicons;
-}
-
-
 export default class IconNB extends NativeBaseComponent {
 
     propTypes: {
         style : React.PropTypes.object
     }
-    
+
+    getIconComponent() {
+        const iconFamily = (this.props.iconFamily || variables.iconFamily || '').toLowerCase()
+        switch(iconFamily) {
+            case 'ionicons':
+                return Ionicons;
+            case 'entypo':
+                return Entypo;
+            case 'fontawesome':
+                return FontAwesome;
+            case 'foundation':
+                return Foundation;
+            case 'materialicons':
+                return MaterialIcons;
+            case 'octicons':
+                return Octicons;
+            case 'zocial':
+                return Zocial;
+            default:
+                return Ionicons;
+        }
+    }
     getInitialStyle() {
         return {
             icon: {
@@ -68,6 +60,7 @@ export default class IconNB extends NativeBaseComponent {
     }
 
     render() {
+        const Icon = this.getIconComponent()
         return(
             <Icon {...this.prepareRootProps()}/>
         );
