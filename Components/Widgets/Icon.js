@@ -5,8 +5,6 @@ import React from 'react';
 import NativeBaseComponent from '../Base/NativeBaseComponent';
 import computeProps from '../../Utils/computeProps';
 
-import variables from '../Themes/light';
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -20,9 +18,11 @@ export default class IconNB extends NativeBaseComponent {
     propTypes: {
         style : React.PropTypes.object
     }
-
+    contextTypes: {
+      theme: React.PropTypes.object
+    }
     getIconComponent() {
-        const iconFamily = (this.props.iconFamily || variables.iconFamily || '').toLowerCase()
+        const iconFamily = (this.props.iconFamily || '').toLowerCase()
         switch(iconFamily) {
             case 'ionicons':
                 return Ionicons;
@@ -42,6 +42,7 @@ export default class IconNB extends NativeBaseComponent {
                 return Ionicons;
         }
     }
+
     getInitialStyle() {
         return {
             icon: {
@@ -56,13 +57,12 @@ export default class IconNB extends NativeBaseComponent {
         };
 
         return computeProps(this.props, defaultProps);
-
     }
 
     render() {
         const Icon = this.getIconComponent()
         return(
             <Icon {...this.prepareRootProps()}/>
-        );
+        )
     }
 }
